@@ -1,0 +1,28 @@
+
+POST http://localhost:8002/api/v1/contact/add
+Content-Type: application/json
+
+ {
+"id": "1",
+"email": "user@email.com",
+"phone": "9211234576"
+}
+
+###
+GET http://localhost:8002/api/v1/contact/get?id=1
+
+###
+GET http://localhost:8002/api/v1/contact/all
+
+###
+PATCH http://localhost:8002/api/v1/contact/edit?id=1
+Content-Type: application/json
+
+ {
+"id": "1",
+"email": "admin@email.com",
+"phone": "9211234576"
+}
+
+###
+DELETE http://localhost:8002/api/v1/contact/delete?id=1

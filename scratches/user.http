@@ -1,0 +1,41 @@
+POST http://localhost:8002/api/v1/user/add
+Content-Type: application/json
+
+{
+  "id": 1,
+  "firstName": "Ivan",
+  "lastName": "Ivanov",
+  "middleName": "Ivanovich",
+  "birthDate": "1990-01-01",
+  "contact": {
+    "id": 1,
+    "email": "user@example.com",
+    "phone": "8619082004"
+  }
+}
+
+###
+GET http://localhost:8002/api/v1/user/get?id=1
+
+###
+GET http://localhost:8002/api/v1/user/all
+
+###
+PATCH http://localhost:8002/api/v1/user/edit?id=1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "firstName": "Ivan",
+  "lastName": "Ivanov",
+  "middleName": "Ivanovich",
+  "birthDate": "1990-01-01",
+  "contact": {
+    "id": 1,
+    "email": "user@example.com",
+    "phone": "8619082004"
+  }
+}
+
+###
+DELETE http://localhost:8002/api/v1/user/delete?id=1
