@@ -1,9 +1,9 @@
 
 ###
-GET http://localhost:8002/api/v1/image/get/photo
+GET http://localhost:8002/api/v1/image/photo
 
 ###
-GET http://localhost:8002/api/v1/image/all
+GET http://localhost:8002/api/v1/image
 
 ###
-DELETE http://localhost:8002/api/v1/image/delete?id=1
+DELETE http://localhost:8002/api/v1/image?id=1

@@ -1,4 +1,4 @@
-POST http://localhost:8002/api/v1/user/add
+POST http://localhost:8002/api/v1/user
 Content-Type: application/json
 
 {
@@ -15,13 +15,13 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8002/api/v1/user/get?id=1
+GET http://localhost:8002/api/v1/user?id=1
 
 ###
 GET http://localhost:8002/api/v1/user/all
 
 ###
-PATCH http://localhost:8002/api/v1/user/edit?id=1
+PATCH http://localhost:8002/api/v1/user?id=1
 Content-Type: application/json
 
 {
@@ -38,4 +38,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:8002/api/v1/user/delete?id=1
+DELETE http://localhost:8002/api/v1/user?id=1

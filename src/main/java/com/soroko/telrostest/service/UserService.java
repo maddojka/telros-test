@@ -1,6 +1,8 @@
 package com.soroko.telrostest.service;
 
+import com.soroko.telrostest.dto.UserDTO;
 import com.soroko.telrostest.entity.User;
+import com.soroko.telrostest.mapper.UserMapper;
 import com.soroko.telrostest.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +23,16 @@ public class UserService {
      * inject user repository in order to put and get data from database
      */
     final UserRepository userRepository;
+    final UserMapper userMapper;
 
     /**
      * Get all users from database
      *
      * @return List of the available users
      */
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return userMapper.toUserDTOList(users);
     }
 
 
@@ -45,9 +49,10 @@ public class UserService {
     /**
      * Add user to database
      *
-     * @param user user to add
+     * @param userDTO user to add
      */
-    public User addUser(User user) {
+    public User addUser(UserDTO userDTO) {
+        User user = userMapper.toUser(userDTO);
         return userRepository.save(user);
     }
 
@@ -57,14 +62,13 @@ public class UserService {
      * @param updatedUser  form of the user to edit
      * @param id id of the user to edit
      */
-    public User updateUser(long id, User updatedUser) {
+    public User updateUser(long id, UserDTO updatedUser) {
         User userToBeUpdated = getUserById(id);
-        userToBeUpdated.setFirstName(updatedUser.getFirstName());
-        userToBeUpdated.setLastName(updatedUser.getLastName());
-        userToBeUpdated.setMiddleName(updatedUser.getMiddleName());
-        userToBeUpdated.setBirthDate(updatedUser.getBirthDate());
-        userToBeUpdated.setContact(updatedUser.getContact());
-//        userToBeUpdated.setImage(updatedUser.getImage());
+        userToBeUpdated.setFirstName(updatedUser.firstName());
+        userToBeUpdated.setLastName(updatedUser.lastName());
+        userToBeUpdated.setMiddleName(updatedUser.middleName());
+        userToBeUpdated.setBirthDate(updatedUser.birthDate());
+        userToBeUpdated.setContact(updatedUser.contact());
         return userRepository.save(userToBeUpdated);
     }
 

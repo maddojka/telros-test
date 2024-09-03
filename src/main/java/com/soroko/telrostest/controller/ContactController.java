@@ -2,7 +2,6 @@ package com.soroko.telrostest.controller;
 
 import com.soroko.telrostest.dto.ContactDTO;
 import com.soroko.telrostest.entity.Contact;
-import com.soroko.telrostest.mapper.ContactMapper;
 import com.soroko.telrostest.service.ContactService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -32,7 +31,6 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ContactController {
     final ContactService contactService;
-    final ContactMapper contactMapper;
 
     /**
      * Get all contact from the service
@@ -42,9 +40,8 @@ public class ContactController {
     @GetMapping("/all")
     @Operation(summary = "Get information about all contacts")
     public ResponseEntity<List<ContactDTO>> getAllContacts() {
-        List<Contact> contacts = contactService.getAllContacts();
-        List<ContactDTO> contactDTO = contactMapper.toContactDTOList(contacts);
-        return ResponseEntity.ok(contactDTO);
+        List<ContactDTO> contactsDTO = contactService.getAllContacts();
+        return ResponseEntity.ok(contactsDTO);
     }
 
     /**
@@ -53,9 +50,9 @@ public class ContactController {
      * @param id id of the contact
      * @return returns contact data
      */
-    @GetMapping("/get")
+    @GetMapping()
     @Operation(summary = "Get information about contact by id")
-    public ResponseEntity<ContactDTO> getContactById(
+    public ResponseEntity<Contact> getContactById(
                                                   @Parameter(description = "contact id", example = "1")
                                                   @RequestParam int id) {
         var contact = contactService.getContactById(id);
@@ -64,8 +61,7 @@ public class ContactController {
                     .status(HttpStatusCode.valueOf(404))
                     .build();
         }
-        ContactDTO contactDTO = contactMapper.toContactDTO(contact);
-        return ResponseEntity.ok(contactDTO);
+        return ResponseEntity.ok(contact);
 
     }
 
@@ -75,32 +71,30 @@ public class ContactController {
      * @param contactDTO contact that is required to add in the system
      * @return returns contact which was added
      */
-    @PostMapping("/add")
+    @PostMapping()
     @Operation(summary = "Add contact to the system")
-    public ResponseEntity<Contact> addContact(@RequestBody ContactDTO contactDTO) {
-        Contact contact = contactMapper.toContact(contactDTO);
-        contactService.addContact(contact);
-        log.info("Adding new contact : {}", contact);
-        return ResponseEntity.ok(contact);
+    public ResponseEntity<ContactDTO> addContact(@RequestBody ContactDTO contactDTO) {
+        contactService.addContact(contactDTO);
+        log.info("Adding new contact : {}", contactDTO);
+        return ResponseEntity.ok(contactDTO);
     }
 
     /**
      * @param contactDTO contact that is required to edit in the system
      * @return returns contact which was edited
      */
-    @PatchMapping("/edit")
+    @PatchMapping()
     @Operation(summary = "Edit existing contact of the system")
-    public ResponseEntity<Contact> updateContact(@RequestParam long id, @RequestBody ContactDTO contactDTO) {
-        Contact contact = contactMapper.toContact(contactDTO);
-        contactService.updateContact(id, contact);
-        log.info("Updating contact : {}", contact);
-        return ResponseEntity.ok(contact);
+    public ResponseEntity<ContactDTO> updateContact(@RequestParam long id, @RequestBody ContactDTO contactDTO) {
+        contactService.updateContact(id, contactDTO);
+        log.info("Updating contact : {}", contactDTO);
+        return ResponseEntity.ok(contactDTO);
     }
 
     /**
      * @param id id of the contact that is required to delete from the system
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping()
     @Operation(summary = "Delete contact from the system")
     public void deleteContact(
                            @Parameter(description = "contact id", example = "1")

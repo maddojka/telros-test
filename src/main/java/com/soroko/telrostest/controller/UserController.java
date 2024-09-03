@@ -33,7 +33,6 @@ import java.util.List;
 public class UserController {
 
     final UserService userService;
-    final UserMapper userMapper;
 
     /**
      * Get all users from the service
@@ -43,8 +42,7 @@ public class UserController {
     @GetMapping("/all")
     @Operation(summary = "Get information about all users")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
-        List<UserDTO> usersDTO = userMapper.toUserDTOList(users);
+        List<UserDTO> usersDTO = userService.getAllUsers();
         return ResponseEntity.ok(usersDTO);
     }
 
@@ -54,9 +52,9 @@ public class UserController {
      * @param id id of the user
      * @return returns user data
      */
-    @GetMapping("/get")
+    @GetMapping()
     @Operation(summary = "Get information about user by id")
-    public ResponseEntity<UserDTO> getUserById(
+    public ResponseEntity<User> getUserById(
             @Parameter(description = "user id", example = "1")
             @RequestParam int id) {
         var user = userService.getUserById(id);
@@ -65,9 +63,7 @@ public class UserController {
                     .status(HttpStatusCode.valueOf(404))
                     .build();
         }
-        UserDTO userDTO = userMapper.toUserDTO(user);
-        return ResponseEntity.ok(userDTO);
-
+        return ResponseEntity.ok(user);
     }
 
     /**
@@ -76,32 +72,30 @@ public class UserController {
      * @param userDTO user that is required to add in the system
      * @return returns user which was added
      */
-    @PostMapping("/add")
+    @PostMapping()
     @Operation(summary = "Add user to the system")
-    public ResponseEntity<User> addUser(@RequestBody UserDTO userDTO) {
-        User user = userMapper.toUser(userDTO);
-        userService.addUser(user);
-        log.info("Adding new user : {}", user);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) {
+        userService.addUser(userDTO);
+        log.info("Adding new user : {}", userDTO);
+        return ResponseEntity.ok(userDTO);
     }
 
     /**
      * @param userDTO user that is required to edit in the system
      * @return returns user which was edited
      */
-    @PatchMapping("/edit")
+    @PatchMapping()
     @Operation(summary = "Edit existing user of the system")
-    public ResponseEntity<User> updateUser(@RequestParam long id, @RequestBody UserDTO userDTO) {
-        User user = userMapper.toUser(userDTO);
-        userService.updateUser(id, user);
-        log.info("Updating user : {}", user);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<UserDTO> updateUser(@RequestParam long id, @RequestBody UserDTO userDTO) {
+        userService.updateUser(id, userDTO);
+        log.info("Updating user : {}", userDTO);
+        return ResponseEntity.ok(userDTO);
     }
 
     /**
      * @param id id of the user that is required to delete from the system
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping()
     @Operation(summary = "Delete user from the system")
     public void deleteUser(
             @Parameter(description = "user id", example = "1")

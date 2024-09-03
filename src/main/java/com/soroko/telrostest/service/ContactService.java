@@ -1,7 +1,9 @@
 package com.soroko.telrostest.service;
 
+import com.soroko.telrostest.dto.ContactDTO;
 import com.soroko.telrostest.entity.Contact;
 import com.soroko.telrostest.entity.User;
+import com.soroko.telrostest.mapper.ContactMapper;
 import com.soroko.telrostest.repository.ContactRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -20,17 +22,19 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ContactService {
     /**
-     * inject contact repository in order to put and get data from database
+     * inject contact repository and mapper in order to put and get data from database
      */
     final ContactRepository contactRepository;
+    final ContactMapper contactMapper;
 
     /**
      * Get all contacts from database
      *
      * @return List of the available contacts
      */
-    public List<Contact> getAllContacts() {
-        return contactRepository.findAll();
+    public List<ContactDTO> getAllContacts() {
+        List<Contact> contacts = contactRepository.findAll();
+        return contactMapper.toContactDTOList(contacts);
     }
 
     /**
@@ -46,9 +50,10 @@ public class ContactService {
     /**
      * Add contact to database
      *
-     * @param contact contact to add
+     * @param contactDTO contact to add
      */
-    public Contact addContact(Contact contact) {
+    public Contact addContact(ContactDTO contactDTO) {
+        Contact contact = contactMapper.toContact(contactDTO);
         return contactRepository.save(contact);
     }
 
@@ -58,10 +63,10 @@ public class ContactService {
      * @param updatedContact form of the contact to edit
      * @param id             id of the contact to edit
      */
-    public Contact updateContact(long id, Contact updatedContact) {
+    public Contact updateContact(long id, ContactDTO updatedContact) {
         Contact contactToBeUpdated = getContactById(id);
-        contactToBeUpdated.setPhone(updatedContact.getPhone());
-        contactToBeUpdated.setEmail(updatedContact.getEmail());
+        contactToBeUpdated.setPhone(updatedContact.phone());
+        contactToBeUpdated.setEmail(updatedContact.email());
         return contactRepository.save(contactToBeUpdated);
     }
 

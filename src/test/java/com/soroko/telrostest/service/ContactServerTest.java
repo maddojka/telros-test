@@ -1,6 +1,7 @@
 package com.soroko.telrostest.service;
 
 
+import com.soroko.telrostest.dto.ContactDTO;
 import com.soroko.telrostest.entity.Contact;
 import com.soroko.telrostest.repository.ContactRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,11 +20,12 @@ public class ContactServerTest {
     private ContactService contactService;
     @Autowired
     private ContactRepository contactRepository;
-    Contact contact;
+    ContactDTO contactDTO;
 
     @BeforeEach
     void setUp() {
-        contact = new Contact();
+        contactDTO = new ContactDTO(1, "9211234568", "contact@email.com");
+        Contact contact = new Contact();
         contact.setId(1);
         contact.setPhone("9211234568");
         contact.setEmail("contact@email.com");
@@ -33,27 +35,27 @@ public class ContactServerTest {
     @Test
     @DisplayName("Check add contact method - contact is OK")
     public void addContact_isNotNull() {
-        contactService.addContact(contact);
+        contactService.addContact(contactDTO);
     }
 
     @Test
     @DisplayName("Check get contact method - contact id is OK")
     public void getContact_correctId() {
-        contactService.getAllContacts().add(contact);
+        contactService.getAllContacts().add(contactDTO);
         contactService.getContactById(1);
     }
 
     @Test
     @DisplayName("Check edit contact method - contact id is OK")
     public void editContact_correctId() {
-        contactService.addContact(contact);
-        contactService.updateContact(1, contact);
+        contactService.addContact(contactDTO);
+        contactService.updateContact(1, contactDTO);
     }
 
     @Test
     @DisplayName("Check remove contact method - contact id is OK")
     public void removeContact_correctId() {
-        contactService.getAllContacts().add(contact);
+        contactService.getAllContacts().add(contactDTO);
         contactService.deleteContact(1);
     }
 }

@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +32,7 @@ public class ImageController {
      *
      * @return returns list of all modified images
      */
-    @GetMapping("/all")
+    @GetMapping()
     @Operation(summary = "Get information about all images")
     public ResponseEntity<List<Image>> getAllImages() {
         List<Image> images = imageService.getAllImages();
@@ -46,7 +45,7 @@ public class ImageController {
      * @param imageName name of the image
      * @return returns image data
      */
-    @GetMapping("/get/{imageName}")
+    @GetMapping("/{imageName}")
     @Operation(summary = "Get information about image by id")
     public ResponseEntity<byte[]> getImageById(
             @Parameter(description = "name of the image", example = "image01")
@@ -61,7 +60,7 @@ public class ImageController {
      * @param fileImage file image that is required to add in the system
      * @return returns image which was added
      */
-    @PostMapping("/add")
+    @PostMapping()
     @Operation(summary = "Add image to the system")
     public ResponseEntity<MultipartFile> addImage(
             @RequestParam("image") MultipartFile fileImage,
@@ -77,7 +76,7 @@ public class ImageController {
      * @param name      name of the image that is required to edit in the system
      * @return returns image which was edited
      */
-    @PatchMapping("/edit")
+    @PatchMapping()
     @Operation(summary = "Edit existing image of the system")
     public ResponseEntity<MultipartFile> updateImage(
             @Parameter(description = "name of the image", example = "photo")
@@ -92,7 +91,7 @@ public class ImageController {
     /**
      * @param id id of the image that is required to delete from the system
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping()
     @Operation(summary = "Delete image from the system")
     public void deleteImage(
             @Parameter(description = "image id", example = "1")
