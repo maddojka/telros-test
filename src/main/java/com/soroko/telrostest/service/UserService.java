@@ -68,7 +68,7 @@ public class UserService {
         userToBeUpdated.setLastName(updatedUser.lastName());
         userToBeUpdated.setMiddleName(updatedUser.middleName());
         userToBeUpdated.setBirthDate(updatedUser.birthDate());
-        userToBeUpdated.setContact(updatedUser.contact());
+//        userToBeUpdated.setContact(updatedUser.contact());
         return userRepository.save(userToBeUpdated);
     }
 

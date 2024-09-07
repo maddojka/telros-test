@@ -61,7 +61,7 @@ class UserControllerTest {
         user.setLastName("Ivanov");
         user.setMiddleName("Ivanovich");
         user.setBirthDate(LocalDate.of(1990, 1, 1));
-        user.setContact(new Contact());
+//        user.setContact(new Contact());
         user.setImage(new Image());
         String userJson = objectMapper.writeValueAsString(user);
         mockMvc.perform(post("/api/v1/user/add")
@@ -79,7 +79,7 @@ class UserControllerTest {
         user.setLastName("Ivanov");
         user.setMiddleName("Ivanovich");
         user.setBirthDate(LocalDate.of(1990, 1, 1));
-        user.setContact(new Contact());
+//        user.setContact(new Contact());
         String userJson = objectMapper.writeValueAsString(user);
         mockMvc.perform(patch("/api/v1/user/edit?id=1")
                         .contentType(MediaType.APPLICATION_JSON)

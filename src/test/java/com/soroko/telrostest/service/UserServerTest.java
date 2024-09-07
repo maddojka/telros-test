@@ -54,7 +54,7 @@ public class UserServerTest {
         user.setLastName("Ivanov");
         user.setMiddleName("Ivanovich");
         user.setBirthDate(LocalDate.of(1990, 1, 1));
-        user.setContact(contact);
+//        user.setContact(contact);
         user.setImage(image);
         userRepository.save(user);
     }

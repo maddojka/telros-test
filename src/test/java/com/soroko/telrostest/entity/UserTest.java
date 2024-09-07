@@ -21,7 +21,7 @@ public class UserTest {
         user.setLastName("Ivanov");
         user.setMiddleName("Ivanovich");
         user.setBirthDate(LocalDate.of(1990, 1, 1));
-        user.setContact(new Contact());
+//        user.setContact(new Contact());
         user.setImage(new Image());
     }
 }

@@ -9,6 +9,8 @@ import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 /**
  * This class consists fields to store contact data to database
  *
